@@ -1,0 +1,7 @@
+ignore all logs
+*.log
+.python-version
+*.swp
+DevHIVAllianceApp/static/.DS_Store
+DeployFlaskApp/*
+*__pycache__*
