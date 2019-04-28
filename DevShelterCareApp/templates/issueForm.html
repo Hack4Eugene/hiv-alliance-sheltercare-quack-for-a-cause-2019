@@ -1,0 +1,96 @@
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+	<title>ShelterCare</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/form.css">
+	</head>
+
+	<body>
+	<div id="header">
+		<img src="../static/img/shelterCare_logo.png" width="400">
+	</div>
+
+
+	<div>
+		<label>Client Name</label>
+		<input type="text" name="client_Name">
+	</div
+	<div>
+		<label>Address</label>
+		<select id="Address" name="Address">
+		<option value="">Select one</option>
+		<option value="Bliar"></option>
+		</select>
+	</div>
+
+	<div>
+		<label>Program</label>
+		<select id="program" name="program">
+		<option value="">Select one</option>
+		<option value="SRA"></option>
+		<option value="SRA2"></option>
+		<option value="SRA-YA"></option>
+		<option value="Madrone"></option>
+		<option value="Spruce"></option>
+		<option value="Camas"></option>
+		<option value="Sahalie"></option>
+		</fieldset>
+	</div>
+
+	<div>
+		<label>Your Initials</label>
+		<input type="text" name="staff_initials">
+	</div>
+
+	<div>
+		<label>Lease Enforcement</label>
+		<select id="location" name="location">
+		<option value="">Select one</option>
+		<option value="Warning">Warning</option>
+		<option value="30/14">30/14</option>
+		<option value="Glenwood">Glenwood</option>
+		<option value="Cottage Grove">Cottage Grove</option>
+		<option value="Outreach">Outreach</option>
+		</select>
+	</div>
+
+	<div>
+		<label>Issue Needing Attention</label>
+		<select id="location" name="location">
+		<input type="text" name="issue" list="issues">
+		<datalist id="cityname">
+			<option value="Smoking in the Unit">Smoking in the Unit</option>
+			<option value="Housekeeping Issues">Housekeeping Issues</option>
+			<option value="Guest Issues">Guest Issues</option>
+			<option value="Neighboe Complaint">Neighbor Complaint (see Notes)</option>
+		</datalist>
+	</div>
+
+	<div>
+		<label>Notes</label>
+		<input type="notes" name="notes">
+	</div>
+
+	<div>
+		<label>Reponse</label>
+		<select id="reponse" name="reponseation">
+		<option value="">Select one</option>
+		<option value="Blair">Blair</option>
+		<option value="HIV A">HIV A</option>
+		<option value="Glenwood">Glenwood</option>
+		<option value="Cottage Grove">Cottage Grove</option>
+		<option value="Outreach">Outreach</option>
+		</select>
+	</div>
+
+	<div style='display:none'>
+		<input type="text" name='client_id' value={{client_id}}>
+	</div>
+
+	<input type="submit">
+	</form>
+	</div>
+</body>
+
+</html>

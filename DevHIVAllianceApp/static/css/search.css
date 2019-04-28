@@ -1,0 +1,129 @@
+.hiva-search-container {
+    margin: auto;
+    max-width: 1000px;
+}
+
+#client-search, #encounter-search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: flex-start;
+    column-gap: 15px;
+}
+
+#form-errors {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #E24132;
+    border-radius: 25px;
+    margin-top: 15px;
+    display: none;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+/*#encounter-search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}*/
+
+label {
+    display: block;
+}
+
+.form-group {
+    width: unset;
+}
+
+#add-client-btn {
+    width: 47%;
+    border: none;
+    border-radius: 0 25px;
+    background-color: #A7AF39;
+    height: 45px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 200px;
+    margin: 0 10px;
+}
+
+#add-client-btn:hover {
+    background-color: #909731;
+}
+
+.edit-btn {
+    width: 25%;
+    border: none;
+    border-radius: 0 25px;
+    background-color: #4493B3;
+    height: 45px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 200px;
+}
+
+.edit-btn:hover {
+    background-color: #3a7f9b;
+}
+
+#search-results {
+    margin-top: 15px;
+    border-top: 1px solid #8a8a8a;
+    padding-top: 10px;
+}
+
+.wrap-client {
+    padding: 15px;
+    border: 1px solid #8a8a8a;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.view-btn-wrapper {
+    order: 2;
+    align-items: center;
+    display: flex;
+}
+
+#search-btn {
+    width: 47%;
+    display: inline-block;
+    margin: 0 10px;
+    min-width: 200px;
+}
+
+.content-wrap div {
+    margin-bottom: 10px;
+}
+
+.view-btn-wrapper {
+    margin-right: 30px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .hiva-search-container {
+        margin-right: 20px;
+        margin-left: 20px
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #search-btn, #add-client-btn {
+        width: 40%;
+        margin-top: 10px;
+    }
+}
+
+button:focus {
+    border: none;
+    outline: none;
+}

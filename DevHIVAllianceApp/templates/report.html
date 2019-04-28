@@ -1,0 +1,449 @@
+<html>
+
+<head>
+  <title>HIV Alliance</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/form.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/search.css">
+  <link rel="icon" href="https://hivalliance.org/wp-content/uploads/2018/08/cropped-HIVA-favicon-32x32.jpg"
+    sizes="32x32">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .report-table {
+      width: 100%;
+      display: table;
+    }
+
+    #client-form-container {
+      display: none;
+      overflow-x:scroll;
+    }
+
+    #encounter-form-container {
+      display: none;
+      overflow-x:scroll;
+    }
+
+    .report-table-header {
+      display: table-header-group;
+      background-color: gray;
+      font-size: 18px;
+      /* overflow-x:scroll; */
+    }
+
+    .report-table-body {
+      display: table-row-group;
+    }
+
+    .report-table-body-row {
+      display: table-row;
+    }
+
+    .report-table-header-cell {
+      background-color: #f2ede9;
+      display: table-cell;
+      padding: 10px;
+      border-bottom: 1px solid black;
+    }
+
+    .report-table-body-cell {
+      display: table-cell;
+      border-bottom: 1px solid black;
+    }
+
+    .highlight-row {
+      background: lightblue
+    }
+
+    .sticky {
+      position: sticky !important;
+      position: -webkit-sticky;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body>
+<div class="topnav hiva-search-container" id="myTopnav">
+  <a href="/" class="active header"><img src="../static/img/HIVA_logo.png" width="340px"></a>
+  <a id="client-create-btn" href="/clientSearch" class="hiva-nav-text">Client Search</a>
+  <a id="report-btn" href="/report" class="hiva-nav-text">Report</a>
+  <a id="logout-btn" href="/logout" class="hiva-nav-text">Logout</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars" style="font-size:48px"></i>
+  </a>
+</div>
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+
+<h2 class="form-group hiva-search-container" style="margin-top:20px;">REPORT MODE</h2>
+<div class="form-group hiva-search-container">
+  <fieldset id="client_or_encounter" class="form-field">
+      <div class="radio-btn">
+        <label><input type="radio" value="Client" name="client_or_encounter"><span>Clients</span><span class="radio-circle"></span></label>
+      </div>
+      <div class="radio-btn">
+        <label><input type="radio" value="Encounter" name="client_or_encounter"><span>Encounters</span><span class="radio-circle"></span></label>
+      </div>
+    </fieldset>
+  <div id="encounter-form-container" class="hiva-search-container">
+    <h2>Encounter Search</h2>
+    <div id="form-errors"></div>
+    <form id="encounter-search" action="{{ url_for('encounter_search_query') }}">
+      <div id="wrap-today" class="form-group">
+        <label for="today">Date of Encounter</label>
+        <input id="today" type="text" name="today" class="form-field">
+      </div>
+      <div id="wrap-staff-initials" class="form-group">
+        <label for="staff-initials">Staff Initials</label>
+        <input id="staff-initials" type="text" name="staff_initials" class="form-field">
+      </div>
+      <div id="wrap-location" class="form-group">
+        <label for="location">Location</label>
+        <select id="location" name="location" class="form-field">
+          <option value="">Select one</option>
+          <option value="Blair">Blair</option>
+          <option value="HIV A">HIV A</option>
+          <option value="Glenwood">Glenwood</option>
+          <option value="Cottage Grove">Cottage Grove</option>
+          <option value="Outreach">Outreach</option>
+        </select>
+      </div>
+
+      <div id="wrap-used-shared-needles" class="form-group">
+        <label for="has_used_shared_needles">Shared Needle Since Last Exchange</label>
+        <fieldset id="has_used_shared_needles" class="form-field">
+          <input type="radio" value="Yes" name="has_used_shared_needles"><span>Yes</span>
+          <input type="radio" value="No" name="has_used_shared_needles"><span>No</span>
+        </fieldset>
+      </div>
+
+      <div id="wrap-has-any-medical-condition" class="form-group">
+        <label for="has_any_medical_condition">Has medical condition</label>
+        <fieldset id="has_any_medical_condition" class="form-field">
+          <input type="radio" value="Yes" name="has_any_medical_condition"><span>Yes</span>
+          <input type="radio" value="No" name="has_any_medical_condition"><span>No</span>
+        </fieldset>
+      </div>
+
+      <div id="wrap-syringes-brought-in" class="form-group">
+        <label for="syringes_brought_in">Syringes IN</label>
+        <input id="syringes_brought_in" type="number" name="syringes_brought_in" class="form-field">
+      </div>
+
+      <div id="wrap-syringes-taken" class="form-group">
+        <label for="syringes_taken">Syringes OUT</label>
+        <input id="syringes_taken" type="number" name="syringes_taken" class="form-field">
+      </div>
+
+      <div id="wrap-is-homeless" class="form-group">
+        <label for="is_homeless">Are you homeless?</label>
+        <fieldset id="is_homeless" class="form-field">
+          <input type="radio" value="Yes" name="is_homeless"><span>Yes</span>
+          <input type="radio" value="No" name="is_homeless"><span>No</span>
+        </fieldset>
+      </div>
+
+      <div id="wrap-health-insurance-provider" class="form-group">
+        <label for="health_insurance_provider">Health Insurance</label>
+        <select id="health_insurance_provider" name="health_insurance_provider" class="form-field">
+          <option value="">Select one</option>
+          <option value="Veterans Benefits">Veterans Benefits</option>
+          <option value="Medicare">Medicare</option>
+          <option value="OHP">OHP</option>
+          <option value="Private Insurance">Private Insurance</option>
+          <option value="Other">Other</option>
+          <option value="None">None</option>
+        </select>
+      </div>
+
+      <div id="wrap-has-exchanged-previously" class="form-group">
+        <label for="has_exchanged_previously">Exhanged needles before</label>
+        <fieldset id="has_exchanged_previously" class="form-field">
+          <input type="radio" value="Yes" name="has_exchanged_previously"><span>Yes</span>
+          <input type="radio" value="No" name="has_exchanged_previously"><span>No</span>
+        </fieldset>
+      </div>
+
+      <div id="wrap-witnessed-od-last-year" class="form-group">
+        <label for="witnessed_od_last_year">Witnessed OD in the past year</label>
+        <fieldset id="witnessed_od_last_year" class="form-field">
+          <input type="radio" value="Yes" name="witnessed_od_last_year"><span>Yes</span>
+          <input type="radio" value="No" name="witnessed_od_last_year"><span>No</span>
+        </fieldset>
+      </div>
+
+      <div id="wrap-is-exchanging-needles-for-others" class="form-group">
+        <label>Number of people exchanging needles for</label>
+        <input type="number" name="people_exchanging_needles_for" class="form-field">
+      </div>
+
+      <div id="wrap-has-received-food" class="form-group">
+        <label for="has_recieved_food">Has received food</label>
+        <fieldset id="has_recieved_food" class="form-field">
+          <input type="radio" value="Yes" name="has_recieved_food"><span>Yes</span>
+          <input type="radio" value="No" name="has_recieved_food"><span>No</span>
+        </fieldset>
+      </div>
+      <button id="encounter-form-submit" type="submit" submit="Submit">Submit</button>
+    </form>
+    <div id="encounter-report-table" class="report-table">
+      <div id="encounter-report-table-header" class="report-table-header">
+        <div class="report-table-header-cell">Encounter Date</div>
+        <div class="report-table-header-cell">Staff Initials</div>
+        <div class="report-table-header-cell">Location</div>
+        <div class="report-table-header-cell">Shared Needles</div>
+        <div class="report-table-header-cell">Syringes Brought In</div>
+        <div class="report-table-header-cell">Syringes Taken</div>
+        <div class="report-table-header-cell">Is Homeless</div>
+      </div>
+      <div id="encounter-report-table-body" class="report-table-body">
+      </div>
+    </div>
+  </div>
+
+  <div id="client-form-container" class="hiva-search-container">
+    <h2>Client Search</h2>
+    <div id="form-errors"></div>
+    <form id="client-search" action="{{ url_for('client_search_query') }}">
+      <div id="wrap-last_name" class="form-group">
+        <label for="last_name">First two letters of last name</label>
+        <input id="last_name" type="text" name="last_name" class="form-field">
+      </div>
+      <div id="wrap-city" class="form-group">
+        <label for="city">First two letters of city you were born in</label>
+        <input id="city" type="text" name="city" class="form-field">
+      </div>
+      <div id="wrap-birthdate" class="form-group">
+        <label>Date of Birth</label>
+        <input id="birthdate" type="text" name="birthdate" class="form-field">
+      </div>
+      <div id="wrap-sex" class="form-group">
+        <label for="sex">Your Sex at Birth</label>
+        <select id="sex" name="sex" class="form-field">
+          <option value="">Select one</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Intersex/other">Intersex/other</option>
+        </select>
+      </div>
+      <div id="wrap-gender" class="form-group">
+        <label for="gender">Your Gender</label>
+        <select id="gender" name="gender" class="form-field">
+          <option value="">Select one</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Gender Non Conforming/other">Gender Non Conforming/other</option>
+        </select>
+      </div>
+      <div id="wrap-ethnicity" class="form-group">
+        <label for="ethnicity">Your Ethnicity</label>
+        <select id="ethnicity" name="ethnicity" class="form-field">
+          <option value="">Select one</option>
+          <option value="Hispanic/Latino">Hispanic/Latino</option>
+          <option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div id="wrap-race" class="form-group">
+        <label for="race">Your Race</label>
+        <select id="race" name="race" class="form-field">
+          <option value="">Select one</option>
+          <option value="Black/African American">Black/African American</option>
+          <option value="Asian">Asian</option>
+          <option value="Native Hawaiian/Pacific Islander">Native Hawaiian/Pacific Islander</option>
+          <option value="American Indian/Alaskan Native">American Indian/Alaskan Native</option>
+          <option value="White">White</option>
+          <option value="Multiracial">Multiracial</option>
+        </select>
+      </div>
+      <div id="wrap-zipcode" class="form-group">
+        <label for="zipcode">Zip code</label>
+        <input id="zipcode" type="number" name="zipcode" class="form-field">
+      </div>
+      <button id="client-form-submit" type="submit" submit="Submit">Submit</button>
+    </form>
+
+    <div id="client-report-table" class="report-table">
+      <div id="client-report-table-header" class=" report-table-header">
+        <div id="last-name-header-cell" class="report-table-header-cell">Last Name</div>
+        <div id="city-header-cell" class="report-table-header-cell">City</div>
+        <div id="birth-date-header-cell" class="report-table-header-cell">Date of Birth</div>
+        <div id="sex-header-cell" class="report-table-header-cell">Sex</div>
+        <div id="gender-header-cell" class="report-table-header-cell">Gender</div>
+        <div id="ethnicity-header-cell" class="report-table-header-cell">Ethnicity</div>
+        <div id="race-header-cell" class="report-table-header-cell">Race</div>
+        <div id="zipcode-header-cell" class="report-table-header-cell">Zip Code</div>
+      </div>
+      <div id="client-report-table-body" class="report-table-body">
+      </div>
+    </div>
+  </div>
+
+  <div id="form-messages"></div>
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="../static/js/dist/jquery.inputmask.bundle.js"></script>
+<script src="../static/js/radio.js"></script>
+<script src="../static/js/encounterSearch.js"></script>
+<script>
+  // When the user scrolls the page, execute myFunction
+  // window.onscroll = function () {
+  //   // applyStickyHeader();
+  // };
+  var table = $("#client-report-table");
+  var tableHeader = $("#client-report-table-header");
+  var tableBody = $("#client-report-table-body");
+
+  // Get the offset position of the navbar
+  var stickyPos = 1400;
+
+  // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+  // function applyStickyHeader() {
+  //   if (window.pageYOffset > stickyPos) {
+  //     tableHeader.addClass("sticky");
+  //   } else {
+  //     tableHeader.removeClass("sticky");
+  //   }
+  // }
+
+
+  // Get the form.
+  // Get the messages div.
+
+  var encounter_form = $('encounter-report-form')
+
+  $(encounter_form).submit(function (event) {
+    // Stop the browser from submitting the form.
+    event.preventDefault();
+    var formData = $(encounter_form).serialize();
+
+    $.ajax({
+      type: 'GET',
+      url: $(encounter_form).attr('action'),
+      data: formData
+    }).done(function (response) {
+
+
+      console.log("Recieved Response");
+
+      // Deletes the row after report is generated
+      while (tableBody[0].firstChild) {
+        tableBody[0].removeChild(tableBody[0].firstChild);
+      }
+      // Set the message text.
+      if (response && response != "[]") {
+        tableBodyRowDiv = '<div class="report-table-body-row"></div>'
+        clients = JSON.parse(response)
+        client_len = clients.length
+        for (var i = 0; i < client_len; ++i) {
+          row = $(tableBody).append(tableBodyRowDiv)
+          if (i % 2 == 0) {
+            cell_open_div = '<div class="report-table-body-cell">'
+          } else {
+            cell_open_div = '<div class="highlight-row report-table-body-cell">'
+          }
+          row.append(cell_open_div + clients[i].last_name + '</div>');
+          row.append(cell_open_div + clients[i].city + '</div>');
+          row.append(cell_open_div + clients[i].birthdate + '</div>');
+          row.append(cell_open_div + clients[i].sex + '</div>');
+          row.append(cell_open_div + clients[i].gender + '</div>');
+          row.append(cell_open_div + clients[i].ethnicity + '</div>');
+          row.append(cell_open_div + clients[i].race + '</div>');
+          row.append(cell_open_div + clients[i].zipcode + '</div>');
+        };
+      }
+    }).fail(function (data) {
+
+    });
+  });
+
+
+  var client_form = $('#client-search');
+  // Generates Report
+
+  $(client_form).submit(function (event) {
+    // Stop the browser from submitting the form.
+    event.preventDefault();
+    var formData = $(client_form).serialize();
+
+    $.ajax({
+      type: 'GET',
+      url: $(client_form).attr('action'),
+      data: formData
+    }).done(function (response) {
+
+      console.log("Recieved Response");
+
+      // Deletes the row after report is generated
+      while (tableBody[0].firstChild) {
+        tableBody[0].removeChild(tableBody[0].firstChild);
+      }
+      // Set the message text.
+      if (response && response != "[]") {
+        tableBodyRowDiv = '<div class="report-table-body-row"></div>'
+        clients = JSON.parse(response)
+        client_len = clients.length
+        for (var i = 0; i < client_len; ++i) {
+          row = $(tableBody).append(tableBodyRowDiv)
+          if (i % 2 == 0) {
+            cell_open_div = '<div class="report-table-body-cell">'
+          } else {
+            cell_open_div = '<div class="highlight-row report-table-body-cell">'
+          }
+          row.append(cell_open_div + clients[i].last_name + '</div>');
+          row.append(cell_open_div + clients[i].city + '</div>');
+          row.append(cell_open_div + clients[i].birthdate + '</div>');
+          row.append(cell_open_div + clients[i].sex + '</div>');
+          row.append(cell_open_div + clients[i].gender + '</div>');
+          row.append(cell_open_div + clients[i].ethnicity + '</div>');
+          row.append(cell_open_div + clients[i].race + '</div>');
+          row.append(cell_open_div + clients[i].zipcode + '</div>');
+        };
+      }
+    }).fail(function (data) {
+
+    });
+  });
+</script>
+<script>
+  //DROPDOWN SCRIPT
+  $("input[value='Client']").change(function (input) {
+    $("#encounter-form-container").hide()
+    $("#client-search").css('display', 'flex')
+    // $("#client-report-table").css('display', 'table')
+    $("#encounter-search").hide()
+    $("#client-form-container").slideDown("slow")
+    $("#client-form-submit").attr("disabled", false);
+    $("#encounter-form-submit").attr("disabled", true);
+
+
+
+
+    $("#client-form-submit").attr("disabled", false);
+  });
+  $("input[value='Encounter']").change(function (input) {
+    $("#client-form-container").hide()
+    $("#encounter-search").css('display', 'flex')
+    $("#encounter-form-container").slideDown("slow")
+    $("#client-search").hide()
+    // $("#client-report-table").hide()
+    $("#client-form-submit").attr("disabled", true);
+    $("#encounter-form-submit").attr("disabled", false);
+
+
+  });
+</script>
+
+</html>

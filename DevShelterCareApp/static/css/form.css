@@ -1,0 +1,111 @@
+body {
+    color: #3a3a3a;
+    font-family: 'Lato', sans-serif;
+}
+
+fieldset {
+    border: none;
+}
+
+label {
+    font-size: 16px;
+}
+
+#header img {
+    width: 340px;
+}
+
+.hiva-container {
+    max-width: 500px;
+    margin: auto;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-field {
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #898989;
+    box-sizing: border-box;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    border-radius: 0px 25px;
+    background-color: #f16459;
+    height: 45px;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #4493b2;
+}
+
+select {
+
+    /* styling */
+    background-color: white;
+    border: thin solid blue;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+  
+    /* reset */
+  
+    margin: 0;      
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+  }
+
+  select:focus {
+    background-image:
+        linear-gradient(45deg, #4493b2 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, #4493b2 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
+    border-color: #4493b2;
+    outline: 0;
+  }
+
+  select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }

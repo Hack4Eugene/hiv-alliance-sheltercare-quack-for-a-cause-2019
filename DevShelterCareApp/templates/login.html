@@ -1,0 +1,14 @@
+<html>
+	<body>
+		<form action="{{ url_for('loginPage') }}" method="POST">
+			<input type="text" name="username" id="username">
+			<input type="password" name="password" id="password">
+			<p style="color:red;">
+				{% if error %}
+				{{ error }}
+				{% endif %}
+			</p>
+			<input type="submit">
+		</form>
+	</body>
+</html>

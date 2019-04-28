@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HIV Alliance</title>
+		<link rel="stylesheet" type="text/css" href="../static/css/form.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div class="topnav hiva-container" id="myTopnav">
+			<a href="/" class="active header"><img src="../static/img/HIVA_logo.png" width="340px"></a>
+			<a id="client-create-btn" href="/clientSearch" class="hiva-nav-text"><div id='navItem'>Client Search</div></a>
+			<a id="report-btn" href="/report" class="hiva-nav-text">Report</a>
+			<a id="logout-btn" href="/logout" class="hiva-nav-text">Logout</a>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars" style="font-size:48px"></i>
+			</a>
+			</div>
+			<script>
+			function myFunction() {
+			var x = document.getElementById("myTopnav");
+			if (x.className === "topnav") {
+				x.className += " responsive";
+			} else {
+				x.className = "topnav";
+			}
+			}
+			</script>
+		<div id="form-container" class="hiva-container">
+			<h2>New Client Demographic Form</h2>
+			<form id="client-dem" action="{{ url_for('client_post') }}" method="POST">
+				<div id="wrap-last_name" class="form-group">
+					<label for="last_name">Last Name (first two letters)</label>
+					<input id="last_name" type="text" name="last_name" class="form-field">
+				</div>
+				<div id="wrap-city" class="form-group">
+					<label for="city">City of Birth (first two letters)</label>
+					<input id="city" type="text" name="city" class="form-field">
+				</div>
+				<div id="wrap-birthdate" class="form-group">
+					<label>Date of Birth</label>
+					<input id="birthdate" type="text" name="birthdate" class="form-field">
+				</div>
+				<div id="wrap-sex" class="form-group">
+					<label for="sex">Sex at Birth</label>
+					<select id="sex" name="sex" class="form-field">
+						<option value="">Select one</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+						<option value="Intersex">Intersex</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div id="wrap-gender" class="form-group">
+					<label for="gender">Gender</label>
+					<select id="gender" name="gender" class="form-field">
+						<option value="">Select one</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+						<option value="Non-binary">Non-binary</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div id="wrap-ethnicity" class="form-group">
+					<label for="ethnicity">Ethnicity</label>
+					<select id="ethnicity" name="ethnicity" class="form-field">
+						<option value="">Select one</option>
+						<option value="Hispanic/Latino">Hispanic/Latino</option>
+						<option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div id="wrap-race" class="form-group">
+					<label for="race">Race</label>
+					<select id="race" name="race" class="form-field">
+						<option value="">Select one</option>
+						<option value="Black/African American">Black/African American</option>
+						<option value="Asian">Asian</option>
+						<option value="Native Hawaiian/Pacific Islander">Native Hawaiian/Pacific Islander</option>
+						<option value="American Indian/Alaskan Native">American Indian/Alaskan Native</option>
+						<option value="White">White</option>
+						<option value="Multiracial">Multiracial</option>
+					</select>
+				</div>
+				<div id="wrap-zipcode" class="form-group">
+					<label for="zipcode">Zip Code</label>
+					<input id="zipcode" type="number" name="zipcode" class="form-field">
+				</div>
+
+                                {% if client_string %}
+				<div id="wrap-client-id" class="form-group">
+                                    <input style="display:none" type="text" id="_id" name="_id" class="form-field">
+                                </div>
+                                {% endif %}
+			</form>
+
+			<button type="submit" form="client-dem" value="Submit">Submit</button>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<script src="../static/js/dist/jquery.inputmask.bundle.js"></script>
+  		<script src="../static/js/radio.js"></script>
+                {% if client_string %}
+                <script>
+                    var client = {{client_string | safe}}
+                    $(".form-field").each(function() {
+                        $(this).val(client[$(this).attr("name")]);
+                    });
+                </script>
+                <script>
+                    var form = $('#client-dem');
+
+                    $(form).submit(function(event) {
+                        event.preventDefault();
+                
+                        var formData = $(form).serialize();
+                
+                        $.ajax({
+                            type: 'PUT',
+                            url: $(form).attr('action'),
+                            data: formData
+                        }).done(function(response){
+                            window.location.href = response;
+                        });
+                    });
+                </script>
+                {% endif %}
+                {% if new_client_string %}
+                <script>
+                    var client = {{new_client_string| safe}}
+                    $(".form-field").each(function() {
+                        $(this).val(client[$(this).attr("name")]);
+                    });
+                </script>
+                {% endif %}
+	</body>
+</html>

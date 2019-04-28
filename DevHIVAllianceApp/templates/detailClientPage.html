@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>HIV Alliance</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<link rel="icon" href="https://hivalliance.org/wp-content/uploads/2018/08/cropped-HIVA-favicon-32x32.jpg" sizes="32x32">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/detailClient.css">
+	<script src="../static/js/collapsible.js"></script>
+</head>
+<body>
+	<div class="hiva-client-container">
+		<div class="topnav" id="myTopnav">
+			<a href="/" class="active header"><img src="../static/img/HIVA_logo.png" width="340px"></a>
+			<a id="client-create-btn" href="/clientSearch" class="hiva-nav-text"><div id='navItem'>Client Search</div></a>
+			<a id="report-btn" href="/report" class="hiva-nav-text">Report</a>
+			<a id="logout-btn" href="/logout" class="hiva-nav-text">Logout</a>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars" style="font-size:48px"></i>
+			</a>
+		</div>
+			<script>
+			function myFunction() {
+			var x = document.getElementById("myTopnav");
+			if (x.className === "topnav") {
+				x.className += " responsive";
+			} else {
+				x.className = "topnav";
+			}
+			}
+			</script>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div id="client-info-header" class="header">Client Info Page</div>
+				<button type="edit" onclick="location.href='../clientEdit?client_id={{ client_info.client_id }}'">
+					<i class="fas fa-user-edit" style="color:#ffffff;"></i> Edit
+				</button>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5">
+				<div class="row">
+					<div class="col-sm-6-head">Birthdate</div>
+					<div class="col-sm-6">{{ client_info.birthdate }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">Last Name</div>
+					<div class="col-sm-6">{{ client_info.last_name }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">City</div>
+					<div class="col-sm-6">{{ client_info.city }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">Zipcode</div>
+					<div class="col-sm-6">{{ client_info.zipcode }}</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="row">
+					<div class="col-sm-6-head">Sex at Birth</div>
+					<div class="col-sm-6">{{ client_info.sex }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">Gender</div>
+					<div class="col-sm-6">{{ client_info.gender }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">Ethnicity</div>
+					<div class="col-sm-6">{{ client_info.ethnicity }}</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6-head">Race</div>
+					<div class="col-sm-6">{{ client_info.race }}</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row encounter-container">
+			<div class="col-md-6">
+				<div id="encounters-header" class="header">Encounters</div>
+				<button type="add" onclick="location.href='../encounterCreate?client_id={{ client_info.client_id }}'">
+					<i class="fas fa-plus" style="color:#ffffff;"></i> Add
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			{% for encounter in encounters %}
+				<div class="col-md-12">
+					<div class="col-sm-3"><b>Staff Initials:</b> {{ encounter.staff_initials }}</div>
+					<div class="col-sm-3"><b>Date:</b> {{ encounter.today }}</div>
+					<div class="col-sm-3"><b>Location:</b> {{ encounter.location }}</div>
+					<div style="margin-top: 4px;">
+						{% if is_admin %}
+						<button class="encounters-btn" type="mini-edit" onclick="location.href='../encounterEdit?encounter_id={{ encounter._id}}'">
+							<i class="far fa-edit" style="color:#ffffff;"></i> Edit
+						</button>
+						{% endif %}
+						<button class="encounters-btn collapsible" type="view">
+							<i class="fa fa-expand" style="color:#ffffff;"></i> View
+						</button>
+						<div id="expand" class="content">
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Staff role</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Alcohol swabs taken</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Is homeless?</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.staff_role }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.alcohol_swabs_taken }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.is_homeless }}</div>
+							</div>
+
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Previously exchanged needles with HIVA?</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Wants Injection Info?</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Cottons Taken</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.has_exchanged_previously }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.wants_injection_info }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.cottons_taken }}</div>
+							</div>
+
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Witnessed OD Last Year?</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Exchanges Needles for Other?</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Months Since Last HEP C Test</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.witnessed_od_last_year }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.people_exchanging_needles_for }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.months_since_hepc_test }}</div>
+							</div>
+							
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Syringes Brought In</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Health Insurance Provider</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Wants Treatment Info?</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.syringes_brought_in }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.health_insurance_provider }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.wants_treatment_info }}</div>
+							</div>
+
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Has Used Shared Needles?</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Months Since HIV Test</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Has Any Medical Condition?</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.has_used_shared_needles }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.months_since_hiv_test }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.has_any_medical_condition }}</div>
+							</div>
+
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Sharps Taken</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Condoms Taken</div>
+							</div>
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Has Recieved Food?</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.sharps_taken }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.condoms_taken }}</div>
+							</div>
+							<div class="col-sm-4">
+								<div>{{ encounter.has_recieved_food }}</div>
+							</div>
+
+							<div class="col-sm-4" id="col-sm-4-head">
+								<div>Syringes Taken</div>
+							</div>
+							<div class="col-sm-12" id="col-sm-12-head">
+								<div>{{ encounter.syringes_taken }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>HIV Alliance</title>
+		<link rel="stylesheet" type="text/css" href="../static/css/form.css">
+		<link rel="stylesheet" type="text/css" href="../static/css/search.css">
+		<link rel="icon" href="https://hivalliance.org/wp-content/uploads/2018/08/cropped-HIVA-favicon-32x32.jpg" sizes="32x32">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div class="topnav hiva-container" id="myTopnav">
+			<a href="/" class="active header"><img src="../static/img/HIVA_logo.png" width="340px"></a>
+			<a id="client-create-btn" href="/clientSearch" class="hiva-nav-text"><div id='navItem'>Client Search</div></a>
+			<a id="report-btn" href="/report" class="hiva-nav-text">Report</a>
+			<a id="logout-btn" href="/logout" class="hiva-nav-text">Login</a>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars" style="font-size:48px"></i>
+			</a>
+			</div>
+			<script>
+			function myFunction() {
+			var x = document.getElementById("myTopnav");
+			if (x.className === "topnav") {
+				x.className += " responsive";
+			} else {
+				x.className = "topnav";
+			}
+			}
+			</script>
+		<form class="hiva-container" action="{{ url_for('loginPage') }}" method="POST">
+			<div class="form-group">
+				<label>Username: </label>
+				<input type="text" class="form-field" name="username" id="username">
+			</div>
+			<div class="form-group">
+				<label>Password:</label>
+				<input type="password" class="form-field" name="password" id="password">
+			</div>
+			<button type="submit">Login</button>
+		</form>
+	</body>
+</html>

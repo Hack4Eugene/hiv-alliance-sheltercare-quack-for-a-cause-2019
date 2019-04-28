@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HIV Alliance</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/form.css">
+  <link rel="icon" href="https://hivalliance.org/wp-content/uploads/2018/08/cropped-HIVA-favicon-32x32.jpg" sizes="32x32">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="topnav hiva-container" id="myTopnav">
+    <a href="/" class="active header"><img src="../static/img/HIVA_logo.png" width="340px"></a>
+    <a id="client-create-btn" href="/clientSearch"> <div id='navItem'>Client Search</div></a>
+    <a id="report-btn" href="/report" class="hiva-nav-text">Report</a>
+    <a id="logout-btn" href="/logout" class="hiva-nav-text">Logout</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars" style="font-size:48px"></i>
+    </a>
+  </div>
+  <script>
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
+  </script>
+  
+  <div id="form-container" class="hiva-container">
+      <h2>Encounter Form</h2>
+    <form id="encounter-form" action="{{ url_for('encounter_post') }}" method="POST">
+      <div id="wrap-today" class="form-group">
+        <label>Date of Encounter</label>
+        <input id="today" type="text" name="today" class="form-field">
+      </div>
+
+      <div id="wrap-staff_role" class="form-group">
+        <label>Role of HIVA Representative</label>
+        <fieldset id="staff_role" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Staff" name="staff_role"><span>Staff</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="Volunteer/Intern" name="staff_role"><span>Volunteer/Intern</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="wrap-staff_initials" class="form-group">
+        <label>Initials of HIVA Representative</label>
+        <input type="text" id="staff_initials" name="staff_initials" class="form-field">
+      </div>
+
+      <div id="wrap-location" class="form-group">
+        <label>HIVA Center Location</label>
+        <select id="location" name="location" class="form-field">
+          <option value="">Select one</option>
+          <option value="Blair">Blair</option>
+          <option value="HIV A">HIV A</option>
+          <option value="Glenwood">Glenwood</option>
+          <option value="Cottage Grove">Cottage Grove</option>
+          <option value="Outreach">Outreach</option>
+        </select>
+      </div>
+
+      <div id="wrap-has_used_shared_needles" class="form-group">
+        <label>Have they shared a used needle since their last exchange?</label>
+        <fieldset id="has_used_shared_needles" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="has_used_shared_needles"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="has_used_shared_needles"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+        <div class="reminder-text">
+            Did you provide harm reduction information?
+        </div>
+      </div>
+    
+
+      <div id="wrap-months_since_hiv_test" class="form-group">
+        <label>How long ago (in months) was their last HIV test?</label>
+        <input type="number" name="months_since_hiv_test" id="months_since_hiv_test" class="form-field">
+        <div class="reminder-text">
+            Was HIV test referral offered?
+        </div>
+      </div>
+
+      <div id="wrap-months_since_hepc_test" class="form-group">
+        <label>How long ago (in months) was their last Hep C test?</label>
+        <input type="number" name="months_since_hepc_test" id="months_since_hepc_test" class="form-field">
+        <div class="reminder-text">
+            Was Hep C test referral offered?
+        </div>
+      </div>
+
+      <div id="wrap-has_any_medical_condition" class="form-group">
+        <label>Do they have any medical conditions for which they need to see a doctor?</label>
+        <fieldset id="has_any_medical_condition" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="has_any_medical_condition"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="has_any_medical_condition"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+        <div class="reminder-text">
+            Was wound/primary care referral offered?
+        </div>
+      </div>
+
+      <div id="wrap-wants_injection_info" class="form-group">
+        <label>Would they like safer injection info?</label>
+        <fieldset id="wants_injection_info" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="wants_injection_info"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="wants_injection_info"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+        <div class="reminder-text">
+            Was safer injection info given?
+        </div>
+      </div>
+
+      <div id="wrap-wants_treatment_info" class="form-group">
+        <label>Would they like information about detox, treatment, or NA meetings?</label>
+        <fieldset id="wants_treatment_info" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="wants_treatment_info"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="wants_treatment_info"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+        <div class="reminder-text">
+            Was detox/treatment referral offered?
+        </div>
+      </div>
+
+      <div id="wrap-syringes_brought_in" class="form-group">
+        <label>Number of Syringes IN</label>
+        <input type="number" name="syringes_brought_in" id="syringes_brought_in" class="form-field">
+      </div>
+
+      <div id="wrap-syringes_taken" class="form-group">
+        <label>Number of Syringes OUT</label>
+        <input type="number" name="syringes_taken" id="syringes_taken" class="form-field">
+      </div>
+
+      <div id="wrap-alcohol_swabs_taken" class="form-group">
+        <label>Number of Alcohol Swabs Taken</label>
+        <input type="number" name="alcohol_swabs_taken" id="alcohol_swabs_taken" class="form-field">
+      </div>
+
+      <div id="wrap-condoms_taken" class="form-group">
+        <label>Number of Condoms Taken</label>
+        <input type="number" name="condoms_taken" id="condoms_taken" class="form-field">
+      </div>
+
+      <div id="wrap-sharps_taken" class="form-group">
+        <label>Number of Sharps Taken</label>
+        <input type="number" name="sharps_taken" id="sharps_taken" class="form-field">
+      </div>
+
+      <div id="wrap-cottons_taken" class="form-group">
+        <label>Number of Cottons Taken</label>
+        <input type="number" name="cottons_taken" id="cottons_taken" class="form-field">
+      </div>
+
+      <div id="wrap-is_homeless" class="form-group">
+        <label>Are they homeless?</label>
+        <fieldset id="is_homeless" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="is_homeless"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="is_homeless"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="wrap-health_insurance_provider" class="form-group">
+        <label>What health insurance do they have (if any)?</label>
+        <select id="health_insurance_provider" name="health_insurance_provider" class="form-field">
+          <option value="">Select one</option>
+          <option value="Veterans Benefits">Veterans Benefits</option>
+          <option value="Medicare">Medicare</option>
+          <option value="OHP">OHP</option>
+          <option value="Private Insurance">Private Insurance</option>
+          <option value="Other">Other</option>
+          <option value="None">None</option>
+        </select>
+      </div>
+
+      <div id="wrap-has_exchanged_previously" class="form-group">
+        <label>Have they exhanged needles with us before?</label>
+        <fieldset id="has_exchanged_previously" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="has_exchanged_previously"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="has_exchanged_previously"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="wrap-witnessed_od_last_year" class="form-group">
+        <label>Have they witnessed a drug overdose in the last 12 months?</label>
+        <fieldset id="witnessed_od_last_year" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="witnessed_od_last_year"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="witnessed_od_last_year"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="wrap-exchanging_needles" class="form-group">
+        <label>Are they exhanging needles for others?</label>
+        <fieldset id="is_exchanging_for_others" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="is_exchanging_for_others"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="is_exchanging_for_others"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+        <label>If so, with how many people?</label>
+        <input type="number" name="people_exchanging_needles_for" class="form-field">
+      </div>
+
+      <div id="wrap-has_recieved_food" class="form-group">
+        <label>Have they received food from us since July 1st, 2017? (snacks at exchange or Hep C case management food bag)</label>
+        <fieldset id="has_recieved_food" class="form-field">
+          <div class="radio-btn">
+            <label><input type="radio" value="Yes" name="has_recieved_food"><span>Yes</span><span class="radio-circle"></span></label>
+          </div>
+          <div class="radio-btn">
+            <label><input type="radio" value="No" name="has_recieved_food"><span>No</span><span class="radio-circle"></span></label>
+          </div>
+        </fieldset>
+      </div>
+        
+      {% if client_id %}
+      <div style="display:none">
+        <input type="text" name="client_id" id="client_id" value="{{client_id}}">
+      </div>
+      {% endif %}
+      {% if encounter_string %}
+      <div style="display:none">
+        <input type="text" name="_id" id="_id" class="form-field">
+      </div>
+      {% endif %}
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="../static/js/dist/jquery.inputmask.bundle.js"></script>
+  <script src="../static/js/radio.js"></script>
+  {% if encounter_string %}
+  <script>
+      var encounter = {{encounter_string | safe}}
+      $(".form-field").each(function() {
+          var fieldVal = encounter[$(this).attr("id")];
+          $(this).val(fieldVal);
+          var inputId = $(this).attr("id");
+          $("input[name=" + inputId +"]").each(function() {
+              if ($(this).val() === fieldVal) {
+                if($(this).attr("type") == "radio") {
+                  $(this).attr("checked", true);
+                  $(this).parent().parent().addClass("checked");
+                }
+              }
+          });
+      });
+  </script>
+  <script>
+      var form = $('#encounter-form');
+  
+      $(form).submit(function(event) {
+          event.preventDefault();
+  
+          var formData = $(form).serialize();
+  
+          $.ajax({
+              type: 'PUT',
+              url: $(form).attr('action'),
+              data: formData
+          }).done(function(response){
+              window.location.href = response;
+          });
+      });
+  </script>
+  {% else %}
+  <script>
+      function FormatNumberLength(num, length) {
+          var r = "" + num;
+          while (r.length < length) {
+              r = "0" + r;
+          }
+          return r;
+      }
+
+      var today = new Date();
+      var dateString = today.getFullYear()+'-'+FormatNumberLength((today.getMonth()+1), 2)+'-'+FormatNumberLength(today.getDate());
+      $("input[name='today']").val(dateString);
+  </script>
+  {% endif %}
+
+</body>
+
+</html>
